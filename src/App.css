@@ -14,11 +14,6 @@ body{
 }
 
 .screen_container{
-  height: auto;
-  width: auto;
-}
-
-canvas{
-  width: auto;
-  height: auto;
+  height: 80%;
+  width: 80%;
 }
