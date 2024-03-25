@@ -47,5 +47,5 @@ def save_image():
         print("Error processing image:", str(e))
         return jsonify({'error': 'Failed to process image'}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
