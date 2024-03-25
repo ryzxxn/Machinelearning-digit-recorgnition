@@ -9,22 +9,46 @@ const DrawingCanvas = () => {
   const startDrawing = (event) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const { offsetX, offsetY } = event.nativeEvent;
+    let { offsetX, offsetY } = event.nativeEvent;
+
+    // Handle touch events
+    if (event.type === 'touchstart') {
+      const touch = event.touches[0];
+      offsetX = touch.clientX - canvas.offsetLeft;
+      offsetY = touch.clientY - canvas.offsetTop;
+
+      // Set passive option to false for touchstart event listener
+      canvas.addEventListener('touchmove', draw, { passive: false });
+      canvas.addEventListener('touchend', endDrawing, { passive: false });
+    }
+
     ctx.beginPath();
     ctx.moveTo(offsetX, offsetY);
     setIsDrawing(true);
+
+    // Set passive option to false for mousedown event listener
+    canvas.addEventListener('mousemove', draw, { passive: false });
+    canvas.addEventListener('mouseup', endDrawing, { passive: false });
   };
 
   const draw = (event) => {
     if (!isDrawing) return;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const { offsetX, offsetY } = event.nativeEvent;
-    
+    let { offsetX, offsetY } = event.nativeEvent;
+
+    // Handle touch events
+    if (event.type === 'touchmove') {
+      event.preventDefault();
+      const touch = event.touches[0];
+      offsetX = touch.clientX - canvas.offsetLeft;
+      offsetY = touch.clientY - canvas.offsetTop;
+    }
+
     // Fill canvas with white color
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
+
     ctx.lineWidth = 10; // Set pen size
     ctx.lineTo(offsetX, offsetY);
     ctx.stroke();
@@ -32,6 +56,13 @@ const DrawingCanvas = () => {
 
   const endDrawing = () => {
     setIsDrawing(false);
+
+    // Remove event listeners
+    const canvas = canvasRef.current;
+    canvas.removeEventListener('touchmove', draw);
+    canvas.removeEventListener('touchend', endDrawing);
+    canvas.removeEventListener('mousemove', draw);
+    canvas.removeEventListener('mouseup', endDrawing);
   };
 
   const saveAndSendImage = async () => {
@@ -52,20 +83,23 @@ const DrawingCanvas = () => {
 
   return (
     <div className='screen_container'>
-    <div className='screen'>
-      <canvas className='canvas'
-        ref={canvasRef}
-        width={500}
-        height={500}
-        onMouseDown={startDrawing}
-        onMouseMove={draw}
-        onMouseUp={endDrawing}
-        onMouseOut={endDrawing}
-        style={{ backgroundColor: 'white', border: '1px solid black' }}
-      />
-      <br />
-      <button onClick={saveAndSendImage}>Save and Send Image</button>
-    </div>
+      <div className='screen'>
+        <canvas className='canvas'
+          ref={canvasRef}
+          width={500}
+          height={500}
+          onMouseDown={startDrawing}
+          onTouchStart={startDrawing}
+          onMouseMove={draw}
+          onTouchMove={draw}
+          onMouseUp={endDrawing}
+          onTouchEnd={endDrawing}
+          onMouseOut={endDrawing}
+          style={{ backgroundColor: 'white', border: '1px solid black' }}
+        />
+        <br />
+        <button onClick={saveAndSendImage}>Save and Send Image</button>
+      </div>
     </div>
   );
 };
