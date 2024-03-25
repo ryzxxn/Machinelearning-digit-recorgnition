@@ -39,7 +39,7 @@ const DrawingCanvas = () => {
     const image = canvas.toDataURL('image/jpeg', 1.0); // Quality parameter is optional and ranges from 0.0 to 1.0
     try {
       // Send image to backend using API
-      const response = await axios.post('http://localhost:5000/saveImage', { image });
+      const response = await axios.post('http://127.0.0.1:5000/saveImage', { image });
       // Handle response here
       console.log('Response:', response.data.message);
       alert(response.data.message)
