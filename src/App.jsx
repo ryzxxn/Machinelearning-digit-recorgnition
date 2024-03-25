@@ -95,7 +95,7 @@ const DrawingCanvas = () => {
           onMouseUp={endDrawing}
           onTouchEnd={endDrawing}
           onMouseOut={endDrawing}
-          style={{ backgroundColor: 'white', border: '1px solid black' }}
+          style={{ backgroundColor: 'white', border: '1px solid black', position: 'fixed', top: '0px', left: '0px' }}
         />
         <br />
         <button onClick={saveAndSendImage}>Save and Send Image</button>

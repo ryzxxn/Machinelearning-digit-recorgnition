@@ -1,6 +1,7 @@
 body{
   margin: 0px;
   background-color: rgb(17, 17, 17);
+  touch-action: none;
 }
 
 .screen{
@@ -11,4 +12,5 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  touch-action: none;
 }
