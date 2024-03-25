@@ -86,8 +86,8 @@ const DrawingCanvas = () => {
       <div className='screen'>
         <canvas className='canvas'
           ref={canvasRef}
-          width={100}
-          height={100}
+          width={200}
+          height={200}
           onMouseDown={startDrawing}
           onTouchStart={startDrawing}
           onMouseMove={draw}
