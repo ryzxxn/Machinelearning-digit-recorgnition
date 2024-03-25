@@ -49,7 +49,7 @@ const DrawingCanvas = () => {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.lineWidth = 10; // Set pen size
+    ctx.lineWidth = 3; // Set pen size
     ctx.lineTo(offsetX, offsetY);
     ctx.stroke();
   };
@@ -86,8 +86,8 @@ const DrawingCanvas = () => {
       <div className='screen'>
         <canvas className='canvas'
           ref={canvasRef}
-          width={500}
-          height={500}
+          width={100}
+          height={100}
           onMouseDown={startDrawing}
           onTouchStart={startDrawing}
           onMouseMove={draw}
