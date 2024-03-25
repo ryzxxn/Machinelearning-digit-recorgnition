@@ -41,7 +41,8 @@ const DrawingCanvas = () => {
       // Send image to backend using API
       const response = await axios.post('http://localhost:5000/saveImage', { image });
       // Handle response here
-      console.log('Response:', response.data);
+      console.log('Response:', response.data.message);
+      alert(response.data.message)
     } catch (error) {
       console.error('Error saving image:', error);
       alert('Error saving image. Please try again later.');
